@@ -8,6 +8,9 @@ dependencies:
   pinia:
     specifier: ^2.1.7
     version: 2.1.7(typescript@5.3.3)(vue@3.3.13)
+  pumpit:
+    specifier: ^4.1.1
+    version: 4.1.1
   vue:
     specifier: ^3.3.11
     version: 3.3.13(typescript@5.3.3)
@@ -3229,6 +3232,10 @@ packages:
       end-of-stream: 1.4.4
       once: 1.4.0
     dev: true
+
+  /pumpit@4.1.1:
+    resolution: {integrity: sha512-EWXnJF0/Eoee3YiungCJ+rAtE7KZm3NgsqbFPjWhKCZNOVdicNlkNUBFj8L9O3xOEMzJK6EC5aDVQB7z3GJI+Q==}
+    dev: false
 
   /punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
