@@ -10,37 +10,50 @@ import type { Either } from '@/common/lib/either.lib'
 import type { Exception } from '@/common/abstracts/extension.abstract'
 import type { HttpClientServiceModel } from '../shared/http-client/http-client-service.model'
 import { HTTP_CLIENT_TOKEN } from '../shared/http-client/http-client.di'
-import { AUTH_CONTROL_TOKEN } from '../shared/auth-control/auth-control.di'
-import type { AuthControlServiceModel } from '../shared/auth-control/auth-control-service.model'
+import { TOKEN_CONTROL_TOKEN } from '../shared/token-control/token-control.di'
+import type { TokenControlServiceModel } from '../shared/token-control/token-control-service.model'
 import environment from '@/configs/environment'
 import { AboutUs } from './entities/about-us'
 import { AllAboutUs } from './entities/all-about-us'
+import { UrlSerializer } from '@/common/lib/url-serializer.lib'
 
 @injectable()
 export class AboutUsService implements AboutUsServiceModel {
+  private API: string
+
   constructor(
     @inject(HTTP_CLIENT_TOKEN) private readonly httpClientService: HttpClientServiceModel,
-    @inject(AUTH_CONTROL_TOKEN) private readonly authControlService: AuthControlServiceModel
-  ) {}
+    @inject(TOKEN_CONTROL_TOKEN) private readonly tokenControlService: TokenControlServiceModel
+  ) {
+    this.API = `${environment().api}/api/aboutUs`
+  }
 
   async findOne(uuid: string): Promise<Either<Exception, AboutUsModel>> {
-    const { accessToken } = this.authControlService.getTokens()
-    const foundedAboutUs = await this.httpClientService.get<AboutUsProps>(
-      `${environment().api}/api/aboutUs/${uuid}`,
-      { token: accessToken }
-    )
+    throw new Error('Method not implemented.')
+    /* const { accessToken } = this.tokenControlService.getTokens()
+    const url = new UrlSerializer(this.API)
+    url.setParam(uuid)
+    const foundedAboutUs = await this.httpClientService.get<AboutUsProps>(url.serializer(), {
+      token: accessToken
+    })
     const aboutUs = foundedAboutUs.map((data) => AboutUs.create(data))
-    return aboutUs
+    return aboutUs */
   }
 
   async findAll({ order, orderBy, page, perPage }: FindAllDto = {}): Promise<
     Either<Exception, ResponseWithPaginate<AllAboutUsModel>>
   > {
-    const { accessToken } = this.authControlService.getTokens()
+    throw new Error('Method not implemented.')
+    /* const { accessToken } = this.tokenControlService.getTokens()
+    const url = new UrlSerializer(this.API)
+    if (order) url.setQuery('order', order)
+    if (orderBy) url.setQuery('orderBy', orderBy)
+    if (page) url.setQuery('page', page)
+    if (perPage) url.setQuery('perPage', perPage)
 
     const foundedAllAboutUs = await this.httpClientService.get<
       ResponseWithPaginate<AboutUsProps[]>
-    >(`${environment().api}/api/aboutUs?order`, { token: accessToken })
+    >(url.serializer(), { token: accessToken })
 
     const allAboutUs = foundedAllAboutUs.map(
       (data) =>
@@ -51,41 +64,47 @@ export class AboutUsService implements AboutUsServiceModel {
         }) as ResponseWithPaginate<AllAboutUsModel>
     )
 
-    return allAboutUs
+    return allAboutUs */
   }
 
   async create(options: CreateAboutUsDto): Promise<Either<Exception, AboutUsModel>> {
-    const { accessToken } = this.authControlService.getTokens()
+    throw new Error('Method not implemented.')
+    /* const { accessToken } = this.tokenControlService.getTokens()
     const foundedAboutUs = await this.httpClientService.post<CreateAboutUsDto, AboutUsProps>(
-      `${environment().api}/api/aboutUs`,
+      this.API,
       options,
       { token: accessToken }
     )
     const aboutUs = foundedAboutUs.map((data) => AboutUs.create(data))
-    return aboutUs
+    return aboutUs */
   }
 
   async updateOne(
     uuid: string,
     options: UpdateAboutUsDto
   ): Promise<Either<Exception, AboutUsModel>> {
-    const { accessToken } = this.authControlService.getTokens()
+    throw new Error('Method not implemented.')
+    /* const { accessToken } = this.tokenControlService.getTokens()
+    const url = new UrlSerializer(this.API)
+    url.setParam(uuid)
     const foundedAboutUs = await this.httpClientService.post<UpdateAboutUsDto, AboutUsProps>(
-      `${environment().api}/api/aboutUs/${uuid}`,
+      url.serializer(),
       options,
       { token: accessToken }
     )
     const aboutUs = foundedAboutUs.map((data) => AboutUs.create(data))
-    return aboutUs
+    return aboutUs */
   }
 
   async removeOne(uuid: string): Promise<Either<Exception, AboutUsModel>> {
-    const { accessToken } = this.authControlService.getTokens()
-    const foundedAboutUs = await this.httpClientService.delete<AboutUsProps>(
-      `${environment().api}/api/aboutUs/${uuid}`,
-      { token: accessToken }
-    )
+    throw new Error('Method not implemented.')
+    /*  const { accessToken } = this.tokenControlService.getTokens()
+    const url = new UrlSerializer(this.API)
+    url.setParam(uuid)
+    const foundedAboutUs = await this.httpClientService.delete<AboutUsProps>(url.serializer(), {
+      token: accessToken
+    })
     const aboutUs = foundedAboutUs.map((data) => AboutUs.create(data))
-    return aboutUs
+    return aboutUs */
   }
 }

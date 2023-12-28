@@ -1,7 +1,7 @@
-export class SerializerResponse<T extends Record<string, unknown>> {
+export class SerializerResponse<T> {
   constructor(
     readonly response: string,
     readonly data?: T,
-    readonly ok = true,
+    readonly ok = true
   ) {}
 }

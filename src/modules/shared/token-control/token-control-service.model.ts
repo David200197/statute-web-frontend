@@ -3,7 +3,8 @@ export type Tokens = {
   refreshToken: string
 }
 
-export interface AuthControlServiceModel {
+export interface TokenControlServiceModel {
   setTokens(tokens: Tokens): void
   getTokens(): Tokens
+  cleanTokens(): void
 }
