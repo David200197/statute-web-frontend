@@ -1,3 +1,3 @@
 export default () => ({
-  api: process.env.VUE_APP_API
+  api: import.meta.env.VITE_API
 })

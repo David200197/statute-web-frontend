@@ -1,5 +1,7 @@
+import { injectable } from 'inversify'
 import type { TokenControlServiceModel, Tokens } from './token-control-service.model'
 
+@injectable()
 export class TokenControlService implements TokenControlServiceModel {
   setTokens({ accessToken, refreshToken }: Tokens): void {
     localStorage.setItem('ACCESS_TOKEN', accessToken)
