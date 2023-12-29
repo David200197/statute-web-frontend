@@ -1,9 +1,8 @@
 import type { EntityModel } from '@/common/abstracts/entity.abstract'
 
-export type AdminProps = {
+export type AnniversaryProps = {
   readonly uuid: string
-  readonly username: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface AdminModel extends EntityModel<AdminProps> {}
+export interface AnniversaryModel extends EntityModel<AnniversaryProps> {}

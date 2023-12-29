@@ -5,7 +5,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
-import { authService } from './modules/auth/auth.di'
+import { aboutUsService } from './modules/about-us/about-us.di'
 
 const app = createApp(App)
 
@@ -16,7 +16,10 @@ app.mount('#app')
 
 //TODO: DELETE
 const bootstrap = async () => {
-  const res = await authService.login({ username: '', password: '' })
-  console.log(res.getOrElse({ accessToken: '', refreshToken: '' }))
+  const res = await aboutUsService.findAll()
+  res.fold(
+    (error) => console.log(error),
+    (data) => console.log(data)
+  )
 }
 bootstrap()

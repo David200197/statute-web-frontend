@@ -1,49 +1,68 @@
 import type { Exception } from '@/common/abstracts/extension.abstract'
 import type { FindAllDto } from '@/common/dto/find-all.dto'
-import type { ResponseWithPaginate } from '@/common/interfaces/response-with-paginate'
 import type { Either } from '@/common/lib/either.lib'
 import type { CreateAdminDto } from './dto/create-admin.dto'
 import type { UpdateAdminDto } from './dto/update-admin.dto'
 import type { AdminServiceModel } from './models/admin-service.model'
-import type { AdminModel } from './models/admin.model'
-import type { AdminsModel } from './models/admins.model'
+import type { AdminModel, AdminProps } from './models/admin.model'
 import { inject, injectable } from 'inversify'
-import type { HttpClientServiceModel } from '../shared/http-client/http-client-service.model'
-import { HTTP_CLIENT_TOKEN } from '../shared/http-client/http-client.di'
-import type { TokenControlServiceModel } from '../shared/token-control/token-control-service.model'
-import { TOKEN_CONTROL_TOKEN } from '../shared/token-control/token-control.di'
-import environment from '@/configs/environment'
+import type { AdminsModelResponseDto } from './dto/admins-model-response.dto'
+import { API_TOKEN } from '../api/api.di'
+import type { ApiServiceModel } from '../api/api-service.model'
+import { Admin } from './entities/admin'
+import type { AdminsResponseDto } from './dto/admins-response.dto'
+import { Admins } from './entities/admins'
 
 @injectable()
 export class AdminService implements AdminServiceModel {
-  private API: string
+  constructor(@inject(API_TOKEN) private readonly apiService: ApiServiceModel) {}
 
-  constructor(
-    @inject(HTTP_CLIENT_TOKEN) private readonly httpClientService: HttpClientServiceModel,
-    @inject(TOKEN_CONTROL_TOKEN) private readonly tokenControlService: TokenControlServiceModel
-  ) {
-    this.API = `${environment().api}/api/admin`
+  async findOne(username: string): Promise<Either<Exception, AdminModel>> {
+    const admin = await this.apiService.get<AdminProps>('admin', {
+      params: [username]
+    })
+    return admin.map((data) => Admin.create(data))
   }
 
-  findOne(username: string): Promise<Either<Exception, AdminModel>> {
-    throw new Error('Method not implemented.')
+  async findAll({ order, orderBy, page, perPage }: FindAllDto = {}): Promise<
+    Either<Exception, AdminsModelResponseDto>
+  > {
+    const queries: Record<string, string> = {}
+    if (order) queries['order'] = order
+    if (orderBy) queries['orderBy'] = orderBy
+    if (page) queries['page'] = page
+    if (perPage) queries['perPage'] = perPage
+
+    const foundedResponse = await this.apiService.get<{
+      data: AdminsResponseDto
+    }>('admin', { queries })
+
+    return foundedResponse.map<AdminsModelResponseDto>(({ data }) => ({
+      admins: Admins.create(data.admins),
+      totalElement: data.totalElement,
+      totalPage: data.totalPage
+    }))
   }
-  findAll(options: FindAllDto): Promise<ResponseWithPaginate<AdminsModel>> {
-    throw new Error('Method not implemented.')
+
+  async create(options: CreateAdminDto): Promise<Either<Exception, AdminModel>> {
+    const admin = await this.apiService.post<CreateAdminDto, AdminProps>('admin', options)
+    return admin.map((data) => Admin.create(data))
   }
-  create(options: CreateAdminDto): Promise<Either<Exception, AdminModel>> {
-    throw new Error('Method not implemented.')
+
+  async updateOne(
+    username: string,
+    options: UpdateAdminDto
+  ): Promise<Either<Exception, AdminModel>> {
+    const admin = await this.apiService.patch<UpdateAdminDto, AdminProps>('admin', options, {
+      params: [username]
+    })
+    return admin.map((data) => Admin.create(data))
   }
-  updateOne(username: string, options: UpdateAdminDto): Promise<Either<Exception, AdminModel>> {
-    throw new Error('Method not implemented.')
-  }
-  removeOne(username: string): Promise<Either<Exception, AdminModel>> {
-    throw new Error('Method not implemented.')
-  }
-  updateMany(username: string, options: UpdateAdminDto): Promise<boolean> {
-    throw new Error('Method not implemented.')
-  }
-  removeMany(username: string): Promise<boolean> {
-    throw new Error('Method not implemented.')
+
+  async removeOne(username: string): Promise<Either<Exception, AdminModel>> {
+    const admin = await this.apiService.delete<AdminProps>('admin', {
+      params: [username]
+    })
+    return admin.map((data) => Admin.create(data))
   }
 }

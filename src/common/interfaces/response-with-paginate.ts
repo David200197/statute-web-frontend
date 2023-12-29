@@ -1,5 +1,4 @@
-export type ResponseWithPaginate<T> = {
-  entities: T;
-  totalElement: number;
-  totalPage: number;
-};
+export type ResponseWithPaginate = {
+  totalElement: number
+  totalPage: number
+}
