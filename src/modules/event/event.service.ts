@@ -45,12 +45,27 @@ export class EventService implements EventServiceModel {
   }
 
   async create(options: CreateEventDto): Promise<Either<Exception, EventModel>> {
-    const event = await this.apiService.post<CreateEventDto, EventProps>('event', options)
+    const formData = new FormData()
+    formData.append('name', options.name)
+    formData.append('date', options.date)
+    formData.append('campus', options.campus)
+    formData.append('rapporteurship', options.rapporteurship)
+    formData.append('sponsors', options.sponsors)
+    for (const photo of options.photos) formData.append('photos', photo, photo.name)
+    const event = await this.apiService.post<FormData, EventProps>('event', formData)
     return event.map((data) => Event.create(data))
   }
 
   async updateOne(uuid: string, options: UpdateEventDto): Promise<Either<Exception, EventModel>> {
-    const event = await this.apiService.patch<UpdateEventDto, EventProps>('event', options, {
+    const formData = new FormData()
+    if (options?.name) formData.append('name', options.name)
+    if (options?.date) formData.append('date', options.date)
+    if (options?.campus) formData.append('campus', options.campus)
+    if (options?.rapporteurship) formData.append('rapporteurship', options.rapporteurship)
+    if (options?.sponsors) formData.append('sponsors', options.sponsors)
+    if (options?.photos)
+      for (const photo of options.photos) formData.append('photos', photo, photo.name)
+    const event = await this.apiService.patch<FormData, EventProps>('event', formData, {
       params: [uuid]
     })
     return event.map((data) => Event.create(data))
