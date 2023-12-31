@@ -8,6 +8,6 @@ export const ANNIVERSARY_SERVICE_TOKEN = Symbol('ANNIVERSARY_SERVICE_TOKEN')
 export const ANNIVERSARY_CONTROLLER_TOKEN = Symbol('ANNIVERSARY_CONTROLLER_TOKEN')
 containerDI.bind<AnniversaryServiceModel>(ANNIVERSARY_SERVICE_TOKEN).to(AnniversaryService)
 containerDI.bind<AnniversaryControllerModel>(ANNIVERSARY_CONTROLLER_TOKEN).to(AnniversaryController)
-export const adminController: AnniversaryControllerModel = containerDI.get(
+export const anniversaryController: AnniversaryControllerModel = containerDI.get(
   ANNIVERSARY_CONTROLLER_TOKEN
 )

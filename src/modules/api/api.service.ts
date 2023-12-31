@@ -7,7 +7,7 @@ import { TOKEN_CONTROL_SERVICE_TOKEN } from '../shared/token-control/token-contr
 import environment from '@/configs/environment'
 import type { HttpClientServiceModel } from '../shared/http-client/http-client-service.model'
 import type { TokenControlServiceModel } from '../shared/token-control/token-control-service.model'
-import { AUTH_TOKEN } from '../auth/auth.di'
+import { AUTH_SERVICE_TOKEN } from '../auth/auth.di'
 import type { AuthServiceModel } from '../auth/models/auth-service.model'
 import { UrlSerializer } from '@/common/lib/url-serializer.lib'
 
@@ -18,7 +18,7 @@ export class ApiService implements ApiServiceModel {
   constructor(
     @inject(HTTP_CLIENT_TOKEN) private readonly httpClientService: HttpClientServiceModel,
     @inject(TOKEN_CONTROL_SERVICE_TOKEN) private readonly tokenControlService: TokenControlServiceModel,
-    @inject(AUTH_TOKEN) private readonly authService: AuthServiceModel
+    @inject(AUTH_SERVICE_TOKEN) private readonly authService: AuthServiceModel
   ) {
     this.API = `${environment().api}/api`
   }
