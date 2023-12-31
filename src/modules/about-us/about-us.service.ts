@@ -10,8 +10,8 @@ import { AboutUs } from './entities/about-us'
 import { AllAboutUs } from './entities/all-about-us'
 import { API_TOKEN } from '../api/api.di'
 import type { ApiServiceModel } from '../api/api-service.model'
+import type { AllAboutUsPropsResponseDto } from './dto/all-about-us-props-response.dto'
 import type { AllAboutUsResponseDto } from './dto/all-about-us-response.dto'
-import type { AllAboutUsModelResponseDto } from './dto/all-about-us-model-response.dto'
 
 @injectable()
 export class AboutUsService implements AboutUsServiceModel {
@@ -25,7 +25,7 @@ export class AboutUsService implements AboutUsServiceModel {
   }
 
   async findAll({ order, orderBy, page, perPage }: FindAllDto = {}): Promise<
-    Either<Exception, AllAboutUsModelResponseDto>
+    Either<Exception, AllAboutUsResponseDto>
   > {
     const queries: Record<string, string> = {}
     if (order) queries['order'] = order
@@ -34,10 +34,10 @@ export class AboutUsService implements AboutUsServiceModel {
     if (perPage) queries['perPage'] = perPage
 
     const response = await this.apiService.get<{
-      data: AllAboutUsResponseDto
+      data: AllAboutUsPropsResponseDto
     }>('about-us', { queries })
 
-    return response.map<AllAboutUsModelResponseDto>(({ data }) => ({
+    return response.map<AllAboutUsResponseDto>(({ data }) => ({
       allAboutUs: AllAboutUs.create(data.allAboutUs),
       totalElement: data.totalElement,
       totalPage: data.totalPage

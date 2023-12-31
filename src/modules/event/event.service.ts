@@ -1,7 +1,7 @@
 import type { Exception } from '@/common/abstracts/extension.abstract'
 import type { Either } from '@/common/lib/either.lib'
 import type { CreateEventDto } from './dto/create-event.dto'
-import type { EventsModelResponseDto } from './dto/events-model-response.dto'
+import type { EventsResponseDto } from './dto/events-response.dto'
 import type { UpdateEventDto } from './dto/update-event.dto'
 import type { EventServiceModel } from './models/event-service.model'
 import type { EventModel, EventProps } from './models/event.model'
@@ -10,7 +10,7 @@ import type { ApiServiceModel } from '../api/api-service.model'
 import { API_TOKEN } from '../api/api.di'
 import { Event } from './entities/event'
 import type { FindAllDto } from '@/common/dto/find-all.dto'
-import type { EventsResponseDto } from './dto/events-response.dto'
+import type { EventsPropsResponseDto } from './dto/events-props-response.dto'
 import { Events } from './entities/events'
 
 @injectable()
@@ -25,7 +25,7 @@ export class EventService implements EventServiceModel {
   }
 
   async findAll({ order, orderBy, page, perPage }: FindAllDto = {}): Promise<
-    Either<Exception, EventsModelResponseDto>
+    Either<Exception, EventsResponseDto>
   > {
     const queries: Record<string, string> = {}
     if (order) queries['order'] = order
@@ -34,10 +34,10 @@ export class EventService implements EventServiceModel {
     if (perPage) queries['perPage'] = perPage
 
     const foundedResponse = await this.apiService.get<{
-      data: EventsResponseDto
+      data: EventsPropsResponseDto
     }>('event', { queries })
 
-    return foundedResponse.map<EventsModelResponseDto>(({ data }) => ({
+    return foundedResponse.map<EventsResponseDto>(({ data }) => ({
       events: Events.create(data.events),
       totalElement: data.totalElement,
       totalPage: data.totalPage

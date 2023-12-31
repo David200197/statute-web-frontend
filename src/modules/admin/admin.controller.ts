@@ -1,5 +1,5 @@
 import type { FindAllDto } from '@/common/dto/find-all.dto'
-import type { AdminsModelResponseDto } from './dto/admins-model-response.dto'
+import type { AdminsResponseDto } from './dto/admins-response.dto'
 import type { CreateAdminDto } from './dto/create-admin.dto'
 import type { UpdateAdminDto } from './dto/update-admin.dto'
 import type { AdminControllerModel } from './models/admin-controller.model'
@@ -17,7 +17,7 @@ export class AdminController implements AdminControllerModel {
     @inject(TOAST_SERVICE_TOKE) private readonly toastService: ToastServiceModel
   ) {}
 
-  async findAll(options: FindAllDto = {}): Promise<AdminsModelResponseDto> {
+  async findAll(options: FindAllDto = {}): Promise<AdminsResponseDto> {
     const either = await this.adminService.findAll(options)
     return either.fold(
       (exception) => {
@@ -41,34 +41,40 @@ export class AdminController implements AdminControllerModel {
 
   async create(options: CreateAdminDto): Promise<AdminModel> {
     const either = await this.adminService.create(options)
-    return either.fold(
+    const admin = either.fold(
       (exception) => {
         this.toastService.emitError(exception.message)
         throw exception
       },
       (value) => value
     )
+    this.toastService.emitLog(`creado con exito`)
+    return admin
   }
 
   async update(username: string, options: UpdateAdminDto): Promise<AdminModel> {
     const either = await this.adminService.updateOne(username, options)
-    return either.fold(
+    const admin = either.fold(
       (exception) => {
         this.toastService.emitError(exception.message)
         throw exception
       },
       (value) => value
     )
+    this.toastService.emitLog(`creado con exito`)
+    return admin
   }
 
   async delete(username: string): Promise<AdminModel> {
     const either = await this.adminService.removeOne(username)
-    return either.fold(
+    const admin = either.fold(
       (exception) => {
         this.toastService.emitError(exception.message)
         throw exception
       },
       (value) => value
     )
+    this.toastService.emitLog(`creado con exito`)
+    return admin
   }
 }

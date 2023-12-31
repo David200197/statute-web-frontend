@@ -1,6 +1,6 @@
 import type { ResponseWithPaginate } from '@/common/interfaces/response-with-paginate'
-import type { SocialNetworkProps } from '../models/social-network.model'
+import type { SocialNetworksModel } from '../models/social-networks.model'
 
 export interface SocialNetworksResponseDto extends ResponseWithPaginate {
-  socialNetworks: SocialNetworkProps[]
+  socialNetworks: SocialNetworksModel
 }

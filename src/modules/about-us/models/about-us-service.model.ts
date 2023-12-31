@@ -4,11 +4,11 @@ import type { CreateAboutUsDto } from '../dto/create-about-us.dto'
 import type { UpdateAboutUsDto } from '../dto/update-about-us.dto'
 import type { Either } from '@/common/lib/either.lib'
 import type { Exception } from '@/common/abstracts/extension.abstract'
-import type { AllAboutUsModelResponseDto } from '../dto/all-about-us-model-response.dto'
+import type { AllAboutUsResponseDto } from '../dto/all-about-us-response.dto'
 
 export interface AboutUsServiceModel {
   findOne(uuid: string): Promise<Either<Exception, AboutUsModel>>
-  findAll(options?: FindAllDto): Promise<Either<Exception, AllAboutUsModelResponseDto>>
+  findAll(options?: FindAllDto): Promise<Either<Exception, AllAboutUsResponseDto>>
   create(options: CreateAboutUsDto): Promise<Either<Exception, AboutUsModel>>
   updateOne(uuid: string, options: UpdateAboutUsDto): Promise<Either<Exception, AboutUsModel>>
   removeOne(uuid: string): Promise<Either<Exception, AboutUsModel>>

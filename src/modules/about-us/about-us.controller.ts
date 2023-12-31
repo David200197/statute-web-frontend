@@ -1,5 +1,5 @@
 import type { FindAllDto } from '@/common/dto/find-all.dto'
-import type { AllAboutUsModelResponseDto } from './dto/all-about-us-model-response.dto'
+import type { AllAboutUsResponseDto } from './dto/all-about-us-response.dto'
 import type { CreateAboutUsDto } from './dto/create-about-us.dto'
 import type { UpdateAboutUsDto } from './dto/update-about-us.dto'
 import type { AboutUsControllerModel } from './models/about-us-controller.model'
@@ -17,7 +17,7 @@ export class AboutUsController implements AboutUsControllerModel {
     @inject(TOAST_SERVICE_TOKE) private readonly toastService: ToastServiceModel
   ) {}
 
-  async findAll(options?: FindAllDto | undefined): Promise<AllAboutUsModelResponseDto> {
+  async findAll(options?: FindAllDto | undefined): Promise<AllAboutUsResponseDto> {
     const either = await this.aboutUsService.findAll(options)
     return either.fold(
       (exception) => {
@@ -30,15 +30,13 @@ export class AboutUsController implements AboutUsControllerModel {
 
   async findOne(uuid: string): Promise<AboutUsModel> {
     const either = await this.aboutUsService.findOne(uuid)
-    const aboutUs = either.fold(
+    return either.fold(
       (exception) => {
         this.toastService.emitError(exception.message)
         throw exception
       },
       (value) => value
     )
-    this.toastService.emitLog(`obtenido con exito`)
-    return aboutUs
   }
 
   async create(options: CreateAboutUsDto): Promise<AboutUsModel> {

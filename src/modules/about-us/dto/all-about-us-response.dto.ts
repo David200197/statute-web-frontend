@@ -1,6 +1,6 @@
 import type { ResponseWithPaginate } from '@/common/interfaces/response-with-paginate'
-import type { AboutUsProps } from '../models/about-us.model'
+import type { AllAboutUsModel } from '../models/all-about-us.model'
 
 export interface AllAboutUsResponseDto extends ResponseWithPaginate {
-  allAboutUs: AboutUsProps[]
+  allAboutUs: AllAboutUsModel
 }

@@ -1,7 +1,7 @@
 import type { Exception } from '@/common/abstracts/extension.abstract'
 import type { FindAllDto } from '@/common/dto/find-all.dto'
 import type { Either } from '@/common/lib/either.lib'
-import type { AnniversariesModelResponseDto } from './dto/anniversaries-model-response.dto'
+import type { AnniversariesResponseDto } from './dto/anniversaries-response.dto'
 import type { CreateAnniversaryDto } from './dto/create-anniversary.dto'
 import type { UpdateAnniversaryDto } from './dto/update-anniversary.dto'
 import type { AnniversaryServiceModel } from './models/anniversary-service.model'
@@ -10,7 +10,7 @@ import { inject, injectable } from 'inversify'
 import { API_TOKEN } from '../api/api.di'
 import type { ApiServiceModel } from '../api/api-service.model'
 import { Anniversary } from './entities/anniversary'
-import type { AnniversariesResponseDto } from './dto/anniversaries-response.dto'
+import type { AnniversariesPropsResponseDto } from './dto/anniversaries-props-response.dto'
 import { Anniversaries } from './entities/anniversaries'
 
 @injectable()
@@ -25,7 +25,7 @@ export class AnniversaryService implements AnniversaryServiceModel {
   }
 
   async findAll({ order, orderBy, page, perPage }: FindAllDto = {}): Promise<
-    Either<Exception, AnniversariesModelResponseDto>
+    Either<Exception, AnniversariesResponseDto>
   > {
     const queries: Record<string, string> = {}
     if (order) queries['order'] = order
@@ -34,10 +34,10 @@ export class AnniversaryService implements AnniversaryServiceModel {
     if (perPage) queries['perPage'] = perPage
 
     const foundedResponse = await this.apiService.get<{
-      data: AnniversariesResponseDto
+      data: AnniversariesPropsResponseDto
     }>('anniversary', { queries })
 
-    return foundedResponse.map<AnniversariesModelResponseDto>(({ data }) => ({
+    return foundedResponse.map<AnniversariesResponseDto>(({ data }) => ({
       anniversaries: Anniversaries.create(data.anniversaries),
       totalElement: data.totalElement,
       totalPage: data.totalPage

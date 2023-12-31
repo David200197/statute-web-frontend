@@ -1,6 +1,6 @@
 import type { ResponseWithPaginate } from '@/common/interfaces/response-with-paginate'
-import type { AnniversaryProps } from '../models/anniversary.model'
+import type { AnniversariesModel } from '../models/anniversaries.model'
 
 export interface AnniversariesResponseDto extends ResponseWithPaginate {
-  anniversaries: AnniversaryProps[]
+  anniversaries: AnniversariesModel
 }

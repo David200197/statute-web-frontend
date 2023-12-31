@@ -4,13 +4,13 @@ import type { Exception } from '@/common/abstracts/extension.abstract'
 import type { FindAllDto } from '@/common/dto/find-all.dto'
 import type { Either } from '@/common/lib/either.lib'
 import type { CreateSocialNetworkDto } from './dto/create-social-network.dto'
-import type { SocialNetworksModelResponseDto } from './dto/social-networks-model-response.dto'
+import type { SocialNetworksResponseDto } from './dto/social-networks-response.dto'
 import type { UpdateSocialNetworkDto } from './dto/update-social-network.dto'
 import type { SocialNetworkModel, SocialNetworkProps } from './models/social-network.model'
 import { API_TOKEN } from '../api/api.di'
 import type { ApiServiceModel } from '../api/api-service.model'
 import { SocialNetwork } from './entities/social-network'
-import type { SocialNetworksResponseDto } from './dto/social-networks-response.dto'
+import type { SocialNetworksPropsResponseDto } from './dto/social-networks-props-response.dto'
 import { SocialNetworks } from './entities/social-networks'
 
 @injectable()
@@ -25,7 +25,7 @@ export class SocialNetworkService implements SocialNetworkServiceModel {
   }
 
   async findAll({ order, orderBy, page, perPage }: FindAllDto = {}): Promise<
-    Either<Exception, SocialNetworksModelResponseDto>
+    Either<Exception, SocialNetworksResponseDto>
   > {
     const queries: Record<string, string> = {}
     if (order) queries['order'] = order
@@ -34,10 +34,10 @@ export class SocialNetworkService implements SocialNetworkServiceModel {
     if (perPage) queries['perPage'] = perPage
 
     const foundedResponse = await this.apiService.get<{
-      data: SocialNetworksResponseDto
+      data: SocialNetworksPropsResponseDto
     }>('social-network', { queries })
 
-    return foundedResponse.map<SocialNetworksModelResponseDto>(({ data }) => ({
+    return foundedResponse.map<SocialNetworksResponseDto>(({ data }) => ({
       socialNetworks: SocialNetworks.create(data.socialNetworks),
       totalElement: data.totalElement,
       totalPage: data.totalPage

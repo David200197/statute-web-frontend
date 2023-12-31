@@ -6,11 +6,11 @@ import type { UpdateAdminDto } from './dto/update-admin.dto'
 import type { AdminServiceModel } from './models/admin-service.model'
 import type { AdminModel, AdminProps } from './models/admin.model'
 import { inject, injectable } from 'inversify'
-import type { AdminsModelResponseDto } from './dto/admins-model-response.dto'
+import type { AdminsResponseDto } from './dto/admins-response.dto'
 import { API_TOKEN } from '../api/api.di'
 import type { ApiServiceModel } from '../api/api-service.model'
 import { Admin } from './entities/admin'
-import type { AdminsResponseDto } from './dto/admins-response.dto'
+import type { AdminsPropsResponseDto } from './dto/admins-props-response.dto'
 import { Admins } from './entities/admins'
 
 @injectable()
@@ -25,7 +25,7 @@ export class AdminService implements AdminServiceModel {
   }
 
   async findAll({ order, orderBy, page, perPage }: FindAllDto = {}): Promise<
-    Either<Exception, AdminsModelResponseDto>
+    Either<Exception, AdminsResponseDto>
   > {
     const queries: Record<string, string> = {}
     if (order) queries['order'] = order
@@ -34,10 +34,10 @@ export class AdminService implements AdminServiceModel {
     if (perPage) queries['perPage'] = perPage
 
     const foundedResponse = await this.apiService.get<{
-      data: AdminsResponseDto
+      data: AdminsPropsResponseDto
     }>('admin', { queries })
 
-    return foundedResponse.map<AdminsModelResponseDto>(({ data }) => ({
+    return foundedResponse.map<AdminsResponseDto>(({ data }) => ({
       admins: Admins.create(data.admins),
       totalElement: data.totalElement,
       totalPage: data.totalPage
