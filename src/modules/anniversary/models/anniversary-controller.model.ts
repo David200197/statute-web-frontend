@@ -9,5 +9,5 @@ export interface AnniversaryControllerModel {
   findAll(options?: FindAllDto): Promise<AnniversariesResponseDto>
   create(options: CreateAnniversaryDto): Promise<AnniversaryModel>
   update(uuid: string, options: UpdateAnniversaryDto): Promise<AnniversaryModel>
-  remove(uuid: string): Promise<AnniversaryModel>
+  delete(uuid: string): Promise<AnniversaryModel>
 }
