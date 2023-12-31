@@ -3,7 +3,7 @@ import type { ApiServiceModel, Endpoint, Options } from './api-service.model'
 import { Exception } from '@/common/abstracts/extension.abstract'
 import { Either } from '@/common/lib/either.lib'
 import { HTTP_CLIENT_TOKEN } from '../shared/http-client/http-client.di'
-import { TOKEN_CONTROL_TOKEN } from '../shared/token-control/token-control.di'
+import { TOKEN_CONTROL_SERVICE_TOKEN } from '../shared/token-control/token-control.di'
 import environment from '@/configs/environment'
 import type { HttpClientServiceModel } from '../shared/http-client/http-client-service.model'
 import type { TokenControlServiceModel } from '../shared/token-control/token-control-service.model'
@@ -17,7 +17,7 @@ export class ApiService implements ApiServiceModel {
 
   constructor(
     @inject(HTTP_CLIENT_TOKEN) private readonly httpClientService: HttpClientServiceModel,
-    @inject(TOKEN_CONTROL_TOKEN) private readonly tokenControlService: TokenControlServiceModel,
+    @inject(TOKEN_CONTROL_SERVICE_TOKEN) private readonly tokenControlService: TokenControlServiceModel,
     @inject(AUTH_TOKEN) private readonly authService: AuthServiceModel
   ) {
     this.API = `${environment().api}/api`

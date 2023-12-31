@@ -7,14 +7,14 @@ import type { AboutUsModel } from './models/about-us.model'
 import { inject, injectable } from 'inversify'
 import type { AboutUsServiceModel } from './models/about-us-service.model'
 import { ABOUT_US_SERVICE_TOKEN } from './about-us.di'
-import { TOAST_TOKEN } from '../shared/toast/toast.di'
+import { TOAST_SERVICE_TOKE } from '../shared/toast/toast.di'
 import type { ToastServiceModel } from '../shared/toast/toast-service.model'
 
 @injectable()
 export class AboutUsController implements AboutUsControllerModel {
   constructor(
     @inject(ABOUT_US_SERVICE_TOKEN) private readonly aboutUsService: AboutUsServiceModel,
-    @inject(TOAST_TOKEN) private readonly toastService: ToastServiceModel
+    @inject(TOAST_SERVICE_TOKE) private readonly toastService: ToastServiceModel
   ) {}
 
   async findAll(options?: FindAllDto | undefined): Promise<AllAboutUsModelResponseDto> {

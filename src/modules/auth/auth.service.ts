@@ -6,7 +6,7 @@ import type { RefreshAuthResponseDto } from './dto/refresh-auth-response.dto'
 import type { AuthServiceModel } from './models/auth-service.model'
 import { inject, injectable } from 'inversify'
 import environment from '@/configs/environment'
-import { TOKEN_CONTROL_TOKEN } from '../shared/token-control/token-control.di'
+import { TOKEN_CONTROL_SERVICE_TOKEN } from '../shared/token-control/token-control.di'
 import { HTTP_CLIENT_TOKEN } from '../shared/http-client/http-client.di'
 import type { HttpClientServiceModel } from '../shared/http-client/http-client-service.model'
 import type { TokenControlServiceModel } from '../shared/token-control/token-control-service.model'
@@ -20,7 +20,7 @@ export class AuthService implements AuthServiceModel {
 
   constructor(
     @inject(HTTP_CLIENT_TOKEN) private readonly httpClientService: HttpClientServiceModel,
-    @inject(TOKEN_CONTROL_TOKEN) private readonly tokenControlService: TokenControlServiceModel
+    @inject(TOKEN_CONTROL_SERVICE_TOKEN) private readonly tokenControlService: TokenControlServiceModel
   ) {
     this.API = `${environment().api}/api/auth`
   }
