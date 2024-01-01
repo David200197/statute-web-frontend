@@ -43,13 +43,13 @@ export const useSocialNetwork = ({ autoFetch = false, ...dto }: ComposableFindAl
     await getSocialNetwork()
   }
 
-  const updateSocialNetwork = async (username: string, options: UpdateSocialNetworkDto) => {
-    await socialNetworkController.update(username, options)
+  const updateSocialNetwork = async (uuid: string, options: UpdateSocialNetworkDto) => {
+    await socialNetworkController.update(uuid, options)
     await getSocialNetwork()
   }
 
-  const deleteSocialNetwork = async (username: string) => {
-    await socialNetworkController.delete(username)
+  const deleteSocialNetwork = async (uuid: string) => {
+    await socialNetworkController.delete(uuid)
     await getSocialNetwork()
   }
 

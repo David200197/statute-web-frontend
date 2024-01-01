@@ -38,13 +38,13 @@ export const useInvitation = ({ autoFetch = false, ...dto }: ComposableFindAllDt
     await getInvitations()
   }
 
-  const updateInvitation = async (username: string, options: UpdateInvitationDto) => {
-    await invitationController.update(username, options)
+  const updateInvitation = async (uuid: string, options: UpdateInvitationDto) => {
+    await invitationController.update(uuid, options)
     await getInvitations()
   }
 
-  const deleteInvitation = async (username: string) => {
-    await invitationController.delete(username)
+  const deleteInvitation = async (uuid: string) => {
+    await invitationController.delete(uuid)
     await getInvitations()
   }
 

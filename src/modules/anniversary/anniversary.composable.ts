@@ -38,13 +38,13 @@ export const useAnniversary = ({ autoFetch = false, ...dto }: ComposableFindAllD
     await getAnniversaries()
   }
 
-  const updateAnniversary = async (username: string, options: UpdateAnniversaryDto) => {
-    await anniversaryController.update(username, options)
+  const updateAnniversary = async (uuid: string, options: UpdateAnniversaryDto) => {
+    await anniversaryController.update(uuid, options)
     await getAnniversaries()
   }
 
-  const deleteAnniversary = async (username: string) => {
-    await anniversaryController.delete(username)
+  const deleteAnniversary = async (uuid: string) => {
+    await anniversaryController.delete(uuid)
     await getAnniversaries()
   }
 

@@ -8,7 +8,7 @@ import type { UpdateStatuteDto } from '../dto/update-statute.dto'
 
 export interface StatuteServiceModel {
   findOne(uuid: string): Promise<Either<Exception, StatuteModel>>
-  findAll(options?: FindAllDto): Promise<StatutesResponseDto>
+  findAll(options?: FindAllDto): Promise<Either<Exception, StatutesResponseDto>>
   create(options: CreateStatuteDto): Promise<Either<Exception, StatuteModel>>
   updateOne(uuid: string, options: UpdateStatuteDto): Promise<Either<Exception, StatuteModel>>
   removeOne(uuid: string): Promise<Either<Exception, StatuteModel>>

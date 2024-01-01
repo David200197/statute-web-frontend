@@ -38,13 +38,13 @@ export const useEvent = ({ autoFetch = false, ...dto }: ComposableFindAllDto = {
     await getEvents()
   }
 
-  const updateEvent = async (username: string, options: UpdateEventDto) => {
-    await eventController.update(username, options)
+  const updateEvent = async (uuid: string, options: UpdateEventDto) => {
+    await eventController.update(uuid, options)
     await getEvents()
   }
 
-  const deleteEvent = async (username: string) => {
-    await eventController.delete(username)
+  const deleteEvent = async (uuid: string) => {
+    await eventController.delete(uuid)
     await getEvents()
   }
 
