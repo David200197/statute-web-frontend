@@ -69,3 +69,4 @@ pnpm lint
 
 ## resources
 https://github.com/ivandotv/pumpit
+https://vuetifyjs.com/en/
